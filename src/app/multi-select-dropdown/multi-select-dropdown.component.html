@@ -1,38 +1,43 @@
-<div class="dropdown">
+<div 
+  class="dropdown"
+  role="listbox"
+  [attr.aria-activedescendant]="activeDescendant()">
+
   <button
     class="btn btn-secondary dropdown-toggle"
     type="button"
     (click)="toggleDropdown()"
     aria-haspopup="true"
-    [attr.aria-expanded]="isOpen()"
-  >
+    [attr.aria-expanded]="isOpen()">
     {{ selectedItemsText() }}
   </button>
+
   <div class="dropdown-menu" [class.show]="isOpen()">
     <input
+      #filterInput
       type="text"
       class="form-control"
       placeholder="Filter..."
       [value]="filterText()"
       (input)="onFilterChange($event)"
-      aria-label="Filter items"
-    />
+      aria-label="Filter items"/>
+
     <a
-      *ngFor="let item of filteredItems()"
+      #dropdownItem
+      *ngFor="let item of filteredItems(); let i = index"
       class="dropdown-item"
       href="#"
       (click)="toggleItem(item); $event.preventDefault()"
-      [class.active]="isSelected(item)"
       role="option"
+      [id]="'ms-item-' + i"
+      [class.active]="isSelected(item)"
       [attr.aria-selected]="isSelected(item)"
-    >
+      [class.keyboard-active]="i === activeIndex()">
       <input
         type="checkbox"
         [checked]="isSelected(item)"
         class="form-check-input"
-        tabindex="-1"
-      />
-      {{ item }}
+        tabindex="-1"/> {{ item }}
     </a>
   </div>
 </div>
