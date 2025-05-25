@@ -1,0 +1,38 @@
+<div class="dropdown">
+  <button
+    class="btn btn-secondary dropdown-toggle"
+    type="button"
+    (click)="toggleDropdown()"
+    aria-haspopup="true"
+    [attr.aria-expanded]="isOpen"
+  >
+    {{ selectedItemsText }}
+  </button>
+  <div class="dropdown-menu" [class.show]="isOpen">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Filter..."
+      (input)="onFilterChange($event)"
+      [value]="filterText"
+      aria-label="Filter items"
+    />
+    <a
+      *ngFor="let item of filteredItems$ | async"
+      class="dropdown-item"
+      href="#"
+      (click)="toggleItem(item); $event.preventDefault()"
+      [class.active]="isSelected(item)"
+      role="option"
+      [attr.aria-selected]="isSelected(item)"
+    >
+      <input
+        type="checkbox"
+        [checked]="isSelected(item)"
+        class="form-check-input"
+        tabindex="-1"
+      />
+      {{ item }}
+    </a>
+  </div>
+</div>
