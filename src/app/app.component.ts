@@ -1,15 +1,27 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { JsonPipe } from '@angular/common';
+
+// Import your standalone component
+import { MultiSelectDropdownComponent } from './multi-select-dropdown/multi-select-dropdown.component';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  // Import all dependencies directly into the component
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    JsonPipe,
+    MultiSelectDropdownComponent
+  ],
   templateUrl: './app.component.html',
-  standalone: false,
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  // For Template-Driven Forms
   public allItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+
+  // For Template-Driven Forms
   public selectedItemsTemplate: string[] = ['Item 2'];
 
   // For Reactive Forms

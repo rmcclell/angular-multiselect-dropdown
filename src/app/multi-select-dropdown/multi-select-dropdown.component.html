@@ -4,21 +4,21 @@
     type="button"
     (click)="toggleDropdown()"
     aria-haspopup="true"
-    [attr.aria-expanded]="isOpen"
+    [attr.aria-expanded]="isOpen()"
   >
-    {{ selectedItemsText }}
+    {{ selectedItemsText() }}
   </button>
-  <div class="dropdown-menu" [class.show]="isOpen">
+  <div class="dropdown-menu" [class.show]="isOpen()">
     <input
       type="text"
       class="form-control"
       placeholder="Filter..."
+      [value]="filterText()"
       (input)="onFilterChange($event)"
-      [value]="filterText"
       aria-label="Filter items"
     />
     <a
-      *ngFor="let item of filteredItems$ | async"
+      *ngFor="let item of filteredItems()"
       class="dropdown-item"
       href="#"
       (click)="toggleItem(item); $event.preventDefault()"

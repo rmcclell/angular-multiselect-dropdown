@@ -1,12 +1,13 @@
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef, signal, computed, effect } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-multi-select-dropdown',
+  standalone: true,
+  imports: [CommonModule], // Import CommonModule for directives like *ngFor
   templateUrl: './multi-select-dropdown.component.html',
   styleUrls: ['./multi-select-dropdown.component.scss'],
-  standalone: false,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -16,27 +17,43 @@ import { BehaviorSubject } from 'rxjs';
   ],
 })
 export class MultiSelectDropdownComponent implements ControlValueAccessor {
+  // Use signal-based inputs
   @Input() items: string[] = [];
   @Input() placeholder = 'Select Items';
 
-  public selectedItems: string[] = [];
-  public filteredItems$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
-  public isOpen = false;
-  public filterText = '';
+  // Component state as signals
+  public selectedItems = signal<string[]>([]);
+  public isOpen = signal(false);
+  public filterText = signal('');
 
+  // The list of items to display is now a computed signal
+  public filteredItems = computed(() => {
+    const filter = this.filterText().toLowerCase();
+    return this.items.filter((item) => item.toLowerCase().includes(filter));
+  });
+
+  // The display text is a computed signal
+  public selectedItemsText = computed(() => {
+    if (this.selectedItems().length === 0) {
+      return this.placeholder;
+    }
+    return this.selectedItems().join(', ');
+  });
+
+  // ControlValueAccessor functions remain the same
   private onChange: (value: string[]) => void = () => {};
   private onTouched: () => void = () => {};
 
   constructor() {
-    this.filteredItems$.next(this.items);
-  }
-
-  ngOnChanges() {
-    this.filteredItems$.next(this.items);
+    // When selectedItems changes, call the registered onChange function
+    effect(() => {
+      this.onChange(this.selectedItems());
+    });
   }
 
   writeValue(value: string[]): void {
-    this.selectedItems = value || [];
+    // Set the signal's value when the form control is updated
+    this.selectedItems.set(value || []);
   }
 
   registerOnChange(fn: (value: string[]) => void): void {
@@ -48,38 +65,29 @@ export class MultiSelectDropdownComponent implements ControlValueAccessor {
   }
 
   toggleDropdown(): void {
-    this.isOpen = !this.isOpen;
-    if (!this.isOpen) {
+    this.isOpen.update(open => !open);
+    if (!this.isOpen()) {
       this.onTouched();
     }
   }
 
   onFilterChange(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
-    this.filterText = filterValue;
-    this.filteredItems$.next(
-      this.items.filter((item) => item.toLowerCase().includes(filterValue))
-    );
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.filterText.set(filterValue);
   }
 
   toggleItem(item: string): void {
-    const index = this.selectedItems.indexOf(item);
-    if (index > -1) {
-      this.selectedItems.splice(index, 1);
-    } else {
-      this.selectedItems.push(item);
-    }
-    this.onChange(this.selectedItems);
+    this.selectedItems.update(currentSelected => {
+      const index = currentSelected.indexOf(item);
+      if (index > -1) {
+        return [...currentSelected.slice(0, index), ...currentSelected.slice(index + 1)];
+      } else {
+        return [...currentSelected, item];
+      }
+    });
   }
 
   isSelected(item: string): boolean {
-    return this.selectedItems.includes(item);
-  }
-
-  get selectedItemsText(): string {
-    if (this.selectedItems.length === 0) {
-      return this.placeholder;
-    }
-    return this.selectedItems.join(', ');
+    return this.selectedItems().includes(item);
   }
 }
