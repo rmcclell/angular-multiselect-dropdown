@@ -1,10 +1,15 @@
 .dropdown-menu {
   max-height: 200px;
   overflow-y: auto;
+  transform: translate(-300px, 47px) !important;
 }
 
 // Style for the currently keyboard-navigated item
 .dropdown-item.keyboard-active {
   background-color: #e9ecef; // A light grey, distinct from the blue 'active' (selected) color
+  color: #212529;
+}
+.dropdown-item:hover {
+  background-color: lightblue; // A light grey, distinct from the blue 'active' (selected) color
   color: #212529;
 }

@@ -20,6 +20,7 @@ export class MultiSelectDropdownComponent implements ControlValueAccessor {
   // Use signal-based inputs
   @Input() items: string[] = [];
   @Input() placeholder = 'Select Items';
+  @Input() display: 'chip' | 'text' = 'chip';
 
   @ViewChildren('dropdownItem') itemElements!: QueryList<ElementRef<HTMLAnchorElement>>;
   @ViewChildren('filterInput') filterInput!: QueryList<ElementRef<HTMLInputElement>>;
@@ -43,6 +44,10 @@ export class MultiSelectDropdownComponent implements ControlValueAccessor {
       return this.placeholder;
     }
     return this.selectedItems().join(', ');
+  });
+
+  public selectedItemsLabel = computed(() => {
+    return this.selectedItems();
   });
 
   // --- NEW: Computed Signal for ARIA ---
@@ -87,13 +92,17 @@ export class MultiSelectDropdownComponent implements ControlValueAccessor {
   // --- Keyboard Event Handling ---
   @HostListener('keydown', ['$event'])
   handleKeyboardEvents(event: KeyboardEvent) {
+    const targetElement = event.target as EventTarget as HTMLAnchorElement;
+    console.log(event);
     if (!this.isOpen()) {
       return;
     }
 
-    event.preventDefault();
+    //event.preventDefault();
+    if (targetElement?.href) {
 
-    switch (event.key) {
+    } else {
+      switch (event.key) {
       case 'ArrowDown':
         this.activeIndex.update(i => (i < this.filteredItems().length - 1 ? i + 1 : i));
         break;
@@ -110,6 +119,9 @@ export class MultiSelectDropdownComponent implements ControlValueAccessor {
         this.closeDropdown();
         break;
     }
+    }
+
+    
   }
 
   // --- Component Methods ---

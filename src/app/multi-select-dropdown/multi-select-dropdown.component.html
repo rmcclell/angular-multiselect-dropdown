@@ -1,43 +1,67 @@
-<div 
-  class="dropdown"
-  role="listbox"
-  [attr.aria-activedescendant]="activeDescendant()">
-
+<div class="d-flex justify-content-start">
+  <div
+        class="form-control d-flex text-truncate rounded-0 rounded-start"
+        style="max-width: 300px; user-select: none"
+        aria-label="Text input with dropdown button"
+        contenteditable="true"
+      >
+      @if (display === 'chip') {
+        <ng-container *ngFor="let selectedItem of selectedItemsLabel(); let i = index">
+        <button
+          type="button"
+          class="btn btn-sm btn-primary rounded-pill d-flex justify-content-between align-items-center"
+          aria-label="Close"
+        >
+          {{ selectedItem }}
+          <div class="btn-close"></div>
+        </button>
+      </ng-container>
+      }
+      @else {
+        {{ selectedItemsText() }}
+      }
+      </div>
+<div class="dropdown d-flex" role="listbox" [attr.aria-activedescendant]="activeDescendant()">
   <button
-    class="btn btn-secondary dropdown-toggle"
+    class="btn btn-outline-secondary rounded-0 rounded-end dropdown-toggle"
     type="button"
     (click)="toggleDropdown()"
     aria-haspopup="true"
+    type="button" data-bs-toggle="dropdown"
     [attr.aria-expanded]="isOpen()">
-    {{ selectedItemsText() }}
   </button>
-
-  <div class="dropdown-menu" [class.show]="isOpen()">
+  <div class="dropdown-menu dropdown-menu-start" [class.show]="isOpen()" style="width: 332px;">
     <input
       #filterInput
       type="text"
       class="form-control"
       placeholder="Filter..."
+      autocomplete="off"
+      spellcheck="false"
       [value]="filterText()"
       (input)="onFilterChange($event)"
+      name="filterText"
       aria-label="Filter items"/>
 
     <a
       #dropdownItem
       *ngFor="let item of filteredItems(); let i = index"
       class="dropdown-item"
-      href="#"
-      (click)="toggleItem(item); $event.preventDefault()"
+      href="javascript:;"
+      (click)="toggleItem(item)"
       role="option"
       [id]="'ms-item-' + i"
-      [class.active]="isSelected(item)"
       [attr.aria-selected]="isSelected(item)"
       [class.keyboard-active]="i === activeIndex()">
       <input
         type="checkbox"
         [checked]="isSelected(item)"
+        [value]="isSelected(item)"
         class="form-check-input"
         tabindex="-1"/> {{ item }}
     </a>
   </div>
+      </div>
 </div>
+
+  
