@@ -10,6 +10,7 @@
         <button
           type="button"
           class="btn btn-sm btn-primary rounded-pill d-flex justify-content-between align-items-center"
+          (click)="unSelectItemLabel(i)"
           aria-label="Close"
         >
           {{ selectedItem }}
@@ -23,7 +24,7 @@
       </div>
 <div class="dropdown d-flex" role="listbox" [attr.aria-activedescendant]="activeDescendant()">
   <button
-    class="btn btn-outline-secondary rounded-0 rounded-end dropdown-toggle"
+    class="btn btn-primary rounded-0 rounded-end dropdown-toggle"
     type="button"
     (click)="toggleDropdown()"
     aria-haspopup="true"
@@ -42,10 +43,9 @@
       (input)="onFilterChange($event)"
       name="filterText"
       aria-label="Filter items"/>
-
-    <a
+    @for (item of filteredItems(); track item; let i = $index) {
+      <a
       #dropdownItem
-      *ngFor="let item of filteredItems(); let i = index"
       class="dropdown-item"
       href="javascript:;"
       (click)="toggleItem(item)"
@@ -60,6 +60,10 @@
         class="form-check-input"
         tabindex="-1"/> {{ item }}
     </a>
+    }@empty {
+      <p>No items found.</p>
+    }
+    
   </div>
       </div>
 </div>

@@ -50,6 +50,10 @@ export class MultiSelectDropdownComponent implements ControlValueAccessor {
     return this.selectedItems();
   });
 
+  public unSelectItemLabel(index: number) {
+    //this.selectedItems.
+  }
+
   // --- NEW: Computed Signal for ARIA ---
   public activeDescendant = computed(() => {
     return this.activeIndex() >= 0 ? `ms-item-${this.activeIndex()}` : '';
