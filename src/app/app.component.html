@@ -7,6 +7,7 @@
   <form #templateForm="ngForm">
     <app-multi-select-dropdown
       [items]="allItems"
+      ariaLabel="Template Form Expand/Collapse"
       [(ngModel)]="selectedItemsTemplate"
       name="selectedItemsTemplate">
     </app-multi-select-dropdown>
@@ -21,6 +22,7 @@
   <form [formGroup]="reactiveForm">
     <app-multi-select-dropdown
       [items]="allItems"
+      ariaLabel="Reactive Form Expand/Collapse"
       formControlName="selectedItems">
     </app-multi-select-dropdown>
     <p class="mt-2">

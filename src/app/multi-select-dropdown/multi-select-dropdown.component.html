@@ -28,6 +28,7 @@
     type="button"
     (click)="toggleDropdown()"
     aria-haspopup="true"
+    [attr.aria-label]="ariaLabel"
     type="button" data-bs-toggle="dropdown"
     [attr.aria-expanded]="isOpen()">
   </button>
