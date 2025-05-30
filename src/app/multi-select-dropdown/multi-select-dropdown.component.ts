@@ -21,7 +21,8 @@ export class MultiSelectDropdownComponent implements ControlValueAccessor {
   @Input() items: string[] = [];
   @Input() placeholder = 'Select Items';
   @Input() ariaLabel = 'Select Items';
-  @Input() display: 'chip' | 'text' = 'chip';
+  @Input() display: 'chip' | 'comma' = 'chip';
+  @Input() emptyFilterMessage: string = 'No items found.';
 
   @ViewChildren('dropdownItem') itemElements!: QueryList<ElementRef<HTMLAnchorElement>>;
   @ViewChildren('filterInput') filterInput!: QueryList<ElementRef<HTMLInputElement>>;
@@ -53,10 +54,10 @@ export class MultiSelectDropdownComponent implements ControlValueAccessor {
 
   public unSelectItemLabel(index: number) {
     this.selectedItems.update(arr => {
-            const copy = arr.slice();
-            copy.splice(index, 1);
-            return copy;
-        });
+      const copy = arr.slice();
+      copy.splice(index, 1);
+      return copy;
+    });
   }
 
   // --- NEW: Computed Signal for ARIA ---
