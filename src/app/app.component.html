@@ -6,7 +6,7 @@
   <h3>Template-Driven Form</h3>
   <form #templateForm="ngForm">
     <app-multi-select-dropdown
-      [items]="allItems"
+      [options]="allItems"
       ariaLabel="Template Form Expand/Collapse"
       [(ngModel)]="selectedItemsTemplate"
       name="selectedItemsTemplate">
@@ -21,7 +21,7 @@
   <h3>Reactive Form</h3>
   <form [formGroup]="reactiveForm">
     <app-multi-select-dropdown
-      [items]="allItems"
+      [options]="allItems"
       ariaLabel="Reactive Form Expand/Collapse"
       formControlName="selectedItems">
     </app-multi-select-dropdown>
@@ -29,4 +29,22 @@
       Selected Items: {{ reactiveForm.get('selectedItems')?.value | json }}
     </p>
   </form>
+
+  <h3>Basic Form</h3>
+  <form #basicTemplateForm="ngForm">
+    <app-multi-select-dropdown
+      [options]="cities"
+      ariaLabel="Reactive Form Expand/Collapse"
+      [(ngModel)]="selectedCities"
+      optionLabel="name"
+      optionValue="code"
+      name="selectedCities"
+      >
+    </app-multi-select-dropdown>
+    <p class="mt-2">
+      Items: {{ cities | json }}
+      Selected Items: {{ selectedCities | json }}
+    </p>
+  </form>
+   
 </div>

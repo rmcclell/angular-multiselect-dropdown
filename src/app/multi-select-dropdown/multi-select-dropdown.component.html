@@ -6,7 +6,7 @@
       <button type="button"
         class="btn btn-sm btn-primary rounded-pill d-flex justify-content-between align-items-center"
         (click)="unSelectItemLabel(i)" aria-label="Close">
-        {{ selectedItem }}
+        {{ getLabel(selectedItem) }}
         <div class="btn-close"></div>
       </button>
     </ng-container>
@@ -21,14 +21,14 @@
       [attr.aria-expanded]="isOpen()">
     </button>
     <div class="dropdown-menu dropdown-menu-end" style="width: 334px" [class.show]="isOpen()">
-      <input #filterInput type="text" class="form-control m-2" placeholder="Filter..." autocomplete="off"
+      <input #filterInput type="text" class="form-control m-2" [placeholder]="filterPlaceHolder" autocomplete="off"
         spellcheck="false" [value]="filterText()" (input)="onFilterChange($event)" name="filterText"
         aria-label="Filter items" />
       @for (item of filteredItems(); track item; let i = $index) {
       <a #dropdownItem class="dropdown-item" href="javascript:;" (click)="toggleItem(item)" role="option"
         [id]="'ms-item-' + i" [attr.aria-selected]="isSelected(item)" [class.keyboard-active]="i === activeIndex()">
         <input type="checkbox" [checked]="isSelected(item)" [value]="isSelected(item)" class="form-check-input"
-          tabindex="-1" /> {{ item }}
+          tabindex="-1" /> {{ getLabel(item) }}
       </a>
       }@empty {
       <div class="alert alert-info m-2" role="alert">

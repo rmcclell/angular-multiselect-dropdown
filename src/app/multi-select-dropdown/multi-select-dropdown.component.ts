@@ -18,11 +18,15 @@ import { CommonModule } from '@angular/common';
 })
 export class MultiSelectDropdownComponent implements ControlValueAccessor {
   // Use signal-based inputs
-  @Input() items: string[] = [];
+  @Input() options: string[] | any[] = [];
   @Input() placeholder = 'Select Items';
   @Input() ariaLabel = 'Select Items';
   @Input() display: 'chip' | 'comma' = 'chip';
   @Input() emptyFilterMessage: string = 'No items found.';
+  @Input() filterPlaceHolder: string = 'Enter text to filter items by';
+  @Input() variant: 'outlined' | 'filled' = 'filled';
+  @Input() optionLabel: string | null = null;
+  @Input() optionValue: string | null = null;
 
   @ViewChildren('dropdownItem') itemElements!: QueryList<ElementRef<HTMLAnchorElement>>;
   @ViewChildren('filterInput') filterInput!: QueryList<ElementRef<HTMLInputElement>>;
@@ -37,8 +41,13 @@ export class MultiSelectDropdownComponent implements ControlValueAccessor {
 
   public filteredItems = computed(() => {
     const filter = this.filterText().toLowerCase();
-    return this.items.filter((item) => item.toLowerCase().includes(filter));
+    return this.options.filter((item) => this.getFilterValue(item).toLowerCase().includes(filter));
   });
+
+  getFilterValue(item: any): string {
+    console.log(item);
+    return typeof(item) === 'object' && this.optionLabel !== null && item[this.optionLabel] ? item[this.optionLabel] : item;
+  }
 
   // The display text is a computed signal
   public selectedItemsText = computed(() => {
@@ -97,6 +106,14 @@ export class MultiSelectDropdownComponent implements ControlValueAccessor {
 
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
+  }
+
+  getLabel(item: any): string {
+    return typeof(item) === 'object' && this.optionLabel !== null && item[this.optionLabel] ? item[this.optionLabel] : item;
+  }
+
+  getValue(item: any): string {
+    return typeof(item) === 'object' && this.optionValue !== null && item[this.optionValue] ? item[this.optionValue] : item;
   }
 
   // --- Keyboard Event Handling ---
