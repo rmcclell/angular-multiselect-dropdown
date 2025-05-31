@@ -15,8 +15,54 @@
       Selected Items: {{ selectedItemsTemplate | json }}
     </p>
   </form>
+  <hr />
+  <h3>Template-Driven Form</h3>
+  <form #templateForm="ngForm">
+    <app-multi-select-dropdown
+      [options]="allItems"
+      color="secondary"
+      ariaLabel="Template Form Expand/Collapse"
+      [(ngModel)]="selectedItemsTemplate"
+      name="selectedItemsTemplate">
+    </app-multi-select-dropdown>
+    <p class="mt-2">
+      Selected Items: {{ selectedItemsTemplate | json }}
+    </p>
+  </form>
 
   <hr />
+
+  <h3>Template-Driven Form</h3>
+  <form #templateForm="ngForm">
+    <app-multi-select-dropdown
+      [options]="allItems"
+      variant="outlined"
+      ariaLabel="Template Form Expand/Collapse"
+      [(ngModel)]="selectedItemsTemplate"
+      name="selectedItemsTemplate">
+    </app-multi-select-dropdown>
+    <p class="mt-2">
+      Selected Items: {{ selectedItemsTemplate | json }}
+    </p>
+  </form>
+  <hr />
+
+<h3>Template-Driven Form</h3>
+  <form #templateForm="ngForm">
+    <app-multi-select-dropdown
+      [options]="allItems"
+      variant="outlined"
+      ariaLabel="Template Form Expand/Collapse"
+      [(ngModel)]="selectedItemsTemplate"
+      display="comma"
+      name="selectedItemsTemplate">
+    </app-multi-select-dropdown>
+    <p class="mt-2">
+      Selected Items: {{ selectedItemsTemplate | json }}
+    </p>
+  </form>
+  <hr />
+
 
   <h3>Reactive Form</h3>
   <form [formGroup]="reactiveForm">

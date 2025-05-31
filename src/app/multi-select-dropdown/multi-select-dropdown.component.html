@@ -4,7 +4,7 @@
     @if (display === 'chip') {
     <ng-container *ngFor="let selectedItem of selectedItemsLabel(); let i = index">
       <button type="button"
-        class="btn btn-sm btn-primary rounded-pill d-flex justify-content-between align-items-center"
+        class="btn btn-sm btn{{ variant === 'outlined' ? '-outline' : '' }}-{{ color }} rounded-pill d-flex justify-content-between align-items-center"
         (click)="unSelectItemLabel(i)" aria-label="Close">
         {{ getLabel(selectedItem) }}
         <div class="btn-close"></div>
@@ -16,12 +16,13 @@
     }
   </div>
   <div class="dropdown d-flex" role="listbox" [attr.aria-activedescendant]="activeDescendant()">
-    <button class="btn btn-primary rounded-0 rounded-end dropdown-toggle" type="button" (click)="toggleDropdown()"
+    <button class="btn btn{{ variant === 'outlined' ? '-outline' : '' }}-{{ color }} rounded-0 rounded-end dropdown-toggle" type="button" (click)="toggleDropdown()"
       aria-haspopup="true" [attr.aria-label]="ariaLabel" type="button" data-bs-toggle="dropdown"
       [attr.aria-expanded]="isOpen()">
     </button>
     <div class="dropdown-menu dropdown-menu-end" style="width: 334px" [class.show]="isOpen()">
-      <input #filterInput type="text" class="form-control m-2" [placeholder]="filterPlaceHolder" autocomplete="off"
+      <div class="container-fluid">
+        <input #filterInput type="text" class="form-control" [placeholder]="filterPlaceHolder" autocomplete="off"
         spellcheck="false" [value]="filterText()" (input)="onFilterChange($event)" name="filterText"
         aria-label="Filter items" />
       @for (item of filteredItems(); track item; let i = $index) {
@@ -31,10 +32,12 @@
           tabindex="-1" /> {{ getLabel(item) }}
       </a>
       }@empty {
-      <div class="alert alert-info m-2" role="alert">
+      <div class="alert alert-info" role="alert">
         {{emptyFilterMessage}}
       </div>
-      }
+      }  
+      </div>
+      
 
     </div>
   </div>

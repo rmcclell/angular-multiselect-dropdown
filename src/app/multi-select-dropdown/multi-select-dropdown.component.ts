@@ -25,8 +25,13 @@ export class MultiSelectDropdownComponent implements ControlValueAccessor {
   @Input() emptyFilterMessage: string = 'No items found.';
   @Input() filterPlaceHolder: string = 'Enter text to filter items by';
   @Input() variant: 'outlined' | 'filled' = 'filled';
+  @Input() size: 'outlined' | 'filled' = 'filled';
+  @Input() color: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'link' = 'primary';
   @Input() optionLabel: string | null = null;
   @Input() optionValue: string | null = null;
+
+
+
 
   @ViewChildren('dropdownItem') itemElements!: QueryList<ElementRef<HTMLAnchorElement>>;
   @ViewChildren('filterInput') filterInput!: QueryList<ElementRef<HTMLInputElement>>;
