@@ -2,6 +2,8 @@
 
 This project was created to fill the void of bootstrap and HTML 5 not having a multiselect dropdown for selecting more than one item. It emulate a lot of the look and feel of primeng. It is designed to use amount of external dependencies, Angluar, Bootstrap, RxJs. 
 
+![localhost_4200_(iPad Pro)](https://github.com/user-attachments/assets/88361e43-31e2-4d44-81f7-3553cd277df7)
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.13.
 
 ## Development server
