@@ -24,7 +24,8 @@ interface City {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  public allItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+  public allItems: string[] = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+  public title: string = 'angular-multiselect-dropdown';
 
   public cities: City[] = [
       {name: 'New York', code: 'NY'},

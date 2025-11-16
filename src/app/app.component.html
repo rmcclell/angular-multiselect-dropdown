@@ -3,7 +3,7 @@
 
   <hr />
 
-  <h3>Template-Driven Form</h3>
+  <label class="form-label">Primary Template-Driven Form</label>
   <form #templateForm="ngForm">
     <app-multi-select-dropdown
       [options]="allItems"
@@ -16,7 +16,7 @@
     </p>
   </form>
   <hr />
-  <h3>Template-Driven Form</h3>
+  <label class="form-label">Secondary Template-Driven Form</label>
   <form #templateForm="ngForm">
     <app-multi-select-dropdown
       [options]="allItems"
@@ -32,7 +32,7 @@
 
   <hr />
 
-  <h3>Template-Driven Form</h3>
+  <label class="form-label">Primary Outline Template-Driven Form</label>
   <form #templateForm="ngForm">
     <app-multi-select-dropdown
       [options]="allItems"
@@ -47,7 +47,7 @@
   </form>
   <hr />
 
-<h3>Template-Driven Form</h3>
+<label class="form-label">Template-Driven Form</label>
   <form #templateForm="ngForm">
     <app-multi-select-dropdown
       [options]="allItems"
@@ -63,8 +63,7 @@
   </form>
   <hr />
 
-
-  <h3>Reactive Form</h3>
+  <label class="form-label">Reactive Form</label>
   <form [formGroup]="reactiveForm">
     <app-multi-select-dropdown
       [options]="allItems"
@@ -76,7 +75,7 @@
     </p>
   </form>
 
-  <h3>Basic Form</h3>
+  <label class="form-label">Basic Form, Custom Model</label>
   <form #basicTemplateForm="ngForm">
     <app-multi-select-dropdown
       [options]="cities"
@@ -88,7 +87,6 @@
       >
     </app-multi-select-dropdown>
     <p class="mt-2">
-      Items: {{ cities | json }}
       Selected Items: {{ selectedCities | json }}
     </p>
   </form>
